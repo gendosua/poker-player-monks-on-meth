@@ -56,7 +56,11 @@ export class GameStateHelper {
     }
 
     public printHand() {
+        const me = this.getMyPlayer()
         const myCards = this.getMyHand();
-        console.log(` My hand is => ${myCards.map(card => `${card.rank}: ${card.suit}`)}`)
+        console.log(`🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀`) 
+        console.log(`Player: ${me.name}, status: ${me.status}, stack: ${me.stack}, bet :${me.bet} `)
+        console.log(` My hand is [${myCards.map(card => `${card.rank}${card.suit}`)}]`)
+        console.log(`🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀`) 
     }
 }

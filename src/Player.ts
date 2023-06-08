@@ -95,11 +95,7 @@ export class Player {
     this.check(betCallback)
   }
 
-  private generateRandomInteger(min: number, max: number): number {
-    return Math.floor(min + Math.random()*(max - min + 1))
-  }
-
-  public showdown(gameState: any): void {
+  public showdown(gameState: GameState): void {
       console.log(` ******** 🥷Showdown 🥷 ********`)
       console.log(JSON.stringify(gameState, null, 0))
   }
