@@ -17,4 +17,20 @@ export class GameStateHelper {
     public getMyPlayer(): PlayerInGame {
         return this.gameState.players[this.gameState.in_action]
     }
+
+    public isPreFloc(): boolean {
+        return this.gameState.round === 0;
+    }
+
+    public isFloc(): boolean {
+        return this.gameState.round === 1;
+    }
+
+    public isTurn(): boolean {
+        return this.gameState.round === 2;
+    }
+
+    public isRiver(): boolean {
+        return this.gameState.round === 3;
+    }
 }

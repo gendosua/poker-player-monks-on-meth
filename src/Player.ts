@@ -20,6 +20,7 @@ export type PlayerInGame = {
 export type GameState = {
   tournament_id: number,
   game_id: number,
+  round: number,
   current_buy_in: number,
   minimum_raise: number,
   bet_index: number,
