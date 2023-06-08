@@ -82,7 +82,7 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
         gameState,
         betCallback,
         gameStateInstance.isRiver()
-            ? gameState.players[gameState.in_action].stack/5
+            ? gameState.players[gameState.in_action].stack
             : (
                 gameStateInstance.isTurn()
                 ? Math.floor(gameState.players[gameState.in_action].stack/10)
@@ -162,7 +162,7 @@ export class Player {
     const callAmount = currentBuy - playerBet
 
     console.log(`++++ 📞 Monks: call ${callAmount} (min_raise=${gameState.minimum_raise}, cur_buy_in=${gameState.current_buy_in}, curr_bet=${playerBet}) 📞+++`)
-    betCallback(callAmount);
+    betCallback(Math.floor(callAmount));
   }
 
   public canRaise(gameState: GameState, newBet): boolean {
@@ -185,7 +185,7 @@ export class Player {
 
     console.log(`++++ 💰 Monks: raise ${correctBet} (min_raise=${gameState.minimum_raise}, cur_buy_in=${gameState.current_buy_in}, curr_bet=${playerBet})  💰 ++++`)
 
-    betCallback(correctBet);
+    betCallback(Math.floor(correctBet));
   }
 
 
