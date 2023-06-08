@@ -86,13 +86,17 @@ export class Player {
   }
 
   public check(betCallback: BetCall) {
+    console.log(`+++ Monks check +++ ♦️`)
     return betCallback(0)
   }
 
   public call(gameState: GameState, betCallback: BetCall): void {
     const currentBuy = gameState.current_buy_in;
-    const playerBet = gameState.players[gameState.in_action].bet
-    betCallback(currentBuy - playerBet);
+    const playerBet = gameState.players[gameState.in_action].bet;
+    const callAmount = currentBuy - playerBet
+
+    console.log(`++++ Monks: call ${callAmount} +++`)
+    betCallback(callAmount);
   }
 
   public canRaise(gameState: GameState): boolean {
@@ -112,6 +116,8 @@ export class Player {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
     const newBet = currentBuy - playerBet + gameState.minimum_raise
+
+    console.log(`++++ Monks: raise ${newBet} ++++`)
 
     betCallback(newBet);
   }
