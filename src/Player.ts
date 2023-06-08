@@ -53,11 +53,11 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
         gameState,
         betCallback,
         gameStateInstance.isRiver()
-            ? gameState.players[gameState.in_action].stack/2
+            ? gameState.players[gameState.in_action].stack/5
             : (
                 gameStateInstance.isTurn()
-                ? Math.floor(gameState.players[gameState.in_action].stack/10)
-                : Math.floor(gameState.players[gameState.in_action].stack/15)
+                ? Math.floor(gameState.players[gameState.in_action].stack/20)
+                : Math.floor(gameState.players[gameState.in_action].stack/25)
             )
     )
     return;
@@ -101,10 +101,9 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/10))
+      this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/20))
       return;
     }
-
 
     this.check(betCallback)
   }
