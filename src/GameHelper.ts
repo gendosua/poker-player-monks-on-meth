@@ -20,28 +20,28 @@ export class GameStateHelper {
 
     public isPreFlop(): boolean {
         if (this.gameState.round === 0) {
-            console.log(`======== PreFlop, round ${this.gameState.round} =========`)
+            console.log(`======== 0️⃣ PreFlop, round ${this.gameState.round} 0️⃣ =========`)
         }
         return this.gameState.round === 0;
     }
 
     public isFlop(): boolean {
         if (this.gameState.round === 1) {
-            console.log(`======== Flop, round ${this.gameState.round} =========`)
+            console.log(`======== 1️⃣ Flop, round ${this.gameState.round} 1️⃣ =========`)
         }
         return this.gameState.round === 1;
     }
 
     public isTurn(): boolean {
         if (this.gameState.round === 2) {
-            console.log(`======== Turn, round ${this.gameState.round} =========`)
+            console.log(`======== 2️⃣ Turn, round ${this.gameState.round} 2️⃣ =========`)
         }
         return this.gameState.round === 2;
     }
 
     public isRiver(): boolean {
         if (this.gameState.round === 3) {
-            console.log(`======== River, round ${this.gameState.round} =========`)
+            console.log(`======== 🌊 River, round ${this.gameState.round} 🌊 =========`)
         }
         return this.gameState.round === 3;
     }
