@@ -41,6 +41,11 @@ export class Player {
     if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
       const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
 
+      if (handRank > 6) {
+        this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
+        return;
+      }
+
       if (handRank > 3) {
         this.raise(gameState, betCallback)
         return;
@@ -66,7 +71,7 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback)
+      this.raise(gameState, betCallback, 100)
     }
 
     this.check(betCallback)
