@@ -1,4 +1,5 @@
 import  { GameState, PlayerInGame } from "./Player";
+import { evaluateHand } from "./combinations";
 
 
 export class GameStateHelper {
@@ -41,7 +42,7 @@ export class GameStateHelper {
 
     public isRiver(): boolean {
         if (this.gameState.community_cards.length === 5) {
-            console.log(`======== 🌊 River, round ${this.gameState.round} 🌊 =========`)
+            console.log(`======== 🌊 River, round ${this.gameState.round} game-id ${this.gameState.game_id} 🌊 =========`)
         }
         return this.gameState.community_cards.length > 5;
     }
@@ -58,9 +59,11 @@ export class GameStateHelper {
     public printHand() {
         const me = this.getMyPlayer()
         const myCards = this.getMyHand();
+        // const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...this.gameState.community_cards])
         console.log(`🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀`) 
         console.log(`Player: ${me.name}, status: ${me.status}, stack: ${me.stack}, bet :${me.bet} `)
-        console.log(` My hand is [${myCards.map(card => `${card.rank}${card.suit}`)}]`)
+        console.log(` My hand is [${myCards.map(card => `${card.rank} ${card.suit}`)}]`)
+
         console.log(`🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀`) 
     }
 }

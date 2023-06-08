@@ -34,6 +34,34 @@ export type GameState = {
   pot: number,
 }
 
+function flop(gameStateInstance: GameStateHelper, gameState: GameState,  myPlayer: PlayerInGame, betCallback: BetCall) {
+  gameStateInstance.printHand()
+  const handRank = evaluateHand([myPlayer.hole_cards[0], myPlayer.hole_cards[1], ...gameState.community_cards])
+
+  if (handRank === HandRank.RoyalFlush) {
+    this.raise(
+        gameState,
+        betCallback,
+        gameState.players[gameState.in_action].stack
+    )
+    return;
+  }
+
+  if (handRank > 6) {
+
+  }
+
+  if (handRank > 2) {
+
+  }
+
+  if (handRank > 0) {
+
+  }
+
+  return 
+}
+
 function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  myPlayer: PlayerInGame, betCallback: BetCall) {
   gameStateInstance.printHand()
   const handRank = evaluateHand([myPlayer.hole_cards[0], myPlayer.hole_cards[1], ...gameState.community_cards])
