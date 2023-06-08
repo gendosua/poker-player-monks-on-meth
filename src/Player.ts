@@ -66,15 +66,10 @@ export class Player {
         return
       }
 
-      if (gameState.pot > 400) {
-        this.call(gameState, betCallback)
-      } else {
-        this.raise(gameState, betCallback)
-      }
+      this.raise(gameState, betCallback)
     }
 
     this.check(betCallback)
-
   }
 
   private generateRandomInteger(min: number, max: number): number {
