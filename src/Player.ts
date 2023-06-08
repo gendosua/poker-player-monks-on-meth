@@ -42,6 +42,8 @@ export class Player {
       gameStateInstance.printHand()
       const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
 
+      console.log(`++++ Monks: hand rank ${handRank}  ++++`)
+
       if (handRank > 6) {
         this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
         return;
@@ -62,6 +64,9 @@ export class Player {
     }
 
     if (gameStateInstance.isPreFlop()) {
+
+      console.log(`++++ Monks: pre-flop hand rank ${initialHandRate}  ++++`)
+
       gameStateInstance.printHand()
       if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
