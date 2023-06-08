@@ -22,7 +22,7 @@ export class GameStateHelper {
         if (this.gameState.round === 0) {
             console.log(`======== 0️⃣ PreFlop, round ${this.gameState.round} 0️⃣ =========`)
         }
-        return this.gameState.round === 0;
+        return this.gameState.round < 1;
     }
 
     public isFlop(): boolean {

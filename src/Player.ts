@@ -1,4 +1,5 @@
 import { GameStateHelper } from "./GameHelper";
+import { evaluateHand } from "./combinations";
 
 type BetCall = (bet: number) => void;
 export type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
@@ -37,7 +38,24 @@ export class Player {
     const me = gameStateInstance.getMyPlayer()
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if (gameStateInstance.isPreFlop() || gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+    if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+      const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
+
+      if (handRank > 3) {
+        this.raise(gameState, betCallback)
+        return;
+      }
+
+      if (handRank > 0) {
+        this.call(gameState, betCallback)
+        return;
+      }
+
+      this.check(betCallback)
+      return;
+    }
+
+    if (gameStateInstance.isPreFlop()) {
       if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
         return 
@@ -53,7 +71,7 @@ export class Player {
       } else {
         this.raise(gameState, betCallback)
       }
-    } 
+    }
 
     this.check(betCallback)
 
@@ -72,7 +90,7 @@ export class Player {
     return betCallback(0)
   }
 
-  public call(gameState: GameState, betCallback: BetCall) {
+  public call(gameState: GameState, betCallback: BetCall): void {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet;
     const callAmount = currentBuy - playerBet
@@ -81,15 +99,27 @@ export class Player {
     betCallback(callAmount);
   }
 
-  public raise(gameState: GameState, betCallback: BetCall) {
+  public canRaise(gameState: GameState): boolean {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
+    const moneyLeft = gameState.players[gameState.in_action].stack
+    const newBet = currentBuy - playerBet + gameState.minimum_raise
 
-    const raiseAmount = currentBuy - playerBet + gameState.minimum_raise
+    return moneyLeft >= newBet
+  }
 
+  public raise(gameState: GameState, betCallback: BetCall): void {
+    if (!this.canRaise(gameState)) {
+      return this.call(gameState, betCallback)
+    }
 
-    console.log(`++++ Monks: raise ${raiseAmount} ++++`)
-    betCallback(raiseAmount);
+    const currentBuy = gameState.current_buy_in;
+    const playerBet = gameState.players[gameState.in_action].bet
+    const newBet = currentBuy - playerBet + gameState.minimum_raise
+
+    console.log(`++++ Monks: raise ${newBet} ++++`)
+
+    betCallback(newBet);
   }
 
 
