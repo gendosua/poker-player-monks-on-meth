@@ -16,6 +16,7 @@ export type PlayerInGame = {
   stack: number,
   bet: number,
   hole_cards?: Card[]
+  amount_won?: number,
 }
 
 export type GameState = {
@@ -103,6 +104,8 @@ export class Player {
   public showdown(gameState: GameState): void {
       console.log(` ******** 🥷Showdown 🥷 ********`)
       console.log(JSON.stringify(gameState, null, 0))
+      const winner = gameState.players.find(player => player?.amount_won)
+      console.log(` 🏆🏆 Winner ${winner.name} amount: ${winner.amount_won} stack: ${winner.stack} 🏆🏆`)
   }
 
   public check(betCallback: BetCall) {
