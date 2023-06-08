@@ -1,8 +1,10 @@
 
-type BetCall = (bet: number) => void
+type BetCall = (bet: number) => void;
+type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
+type Suit = "spades" | "hearts" | "clubs" | "diamonds";
 type Card = {
-  rank: number,
-  suit: string //todo: make this an union type
+  rank: Rank,
+  suit: Suit 
 }
 
 type PlayerInGame = {
