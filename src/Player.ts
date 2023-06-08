@@ -114,7 +114,9 @@ export class Player {
       console.log(` ******** 🥷Showdown 🥷 ********`)
       console.log(JSON.stringify(gameState, null, 0))
       const winner = gameState.players.find(player => player?.amount_won)
-      console.log(` 🏆🏆 Winner ${winner.name} amount: ${winner.amount_won} stack: ${winner.stack} 🏆🏆`)
+      if (winner) {
+        console.log(` 🏆🏆 Winner ${winner.name} amount: ${winner.amount_won} stack: ${winner.stack} 🏆🏆`)
+      }
   }
 
   public check(betCallback: BetCall) {
