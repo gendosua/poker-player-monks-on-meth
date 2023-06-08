@@ -65,22 +65,22 @@ const GreatStartingHands = {
   'KK': true,
   'QQ': true,
   'JJ': true,
-  'TT': true,
+  '1010': true,
   '99': true,
   '88': true,
   '77': true,
   'AK': true,
   'AQ': true,
   'AJ': true,
-  'AT': true,
+  'A10': true,
   'KQ': true,
   'KJ': true,
-  'KT': true,
+  'K10': true,
   'QJ': true,
-  'QT': true,
-  'JT': true,
+  'Q10': true,
+  'J10': true,
   'J9': true,
-  'T9': true,
+  '109': true,
 }
 
 const GoodStartingHands = {
@@ -94,11 +94,11 @@ const GoodStartingHands = {
   'Q9': true,
   'Q8': true,
   'J8': true,
-  'T8': true,
+  '108': true,
   '98': true,
 }
 
-const cardOrder = ["A", "K", "Q", "J", "T", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
+const cardOrder = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
 
 function rateStartingHand(card1: Card, card2: Card): HandRating {
   const pos1 = cardOrder.indexOf(card1.rank)
