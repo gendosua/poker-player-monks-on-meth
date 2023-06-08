@@ -74,7 +74,8 @@ export class Player {
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
     if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
-      afterFlop(gameStateInstance, gameState, me, betCallback)
+      afterFlop.call(this, gameStateInstance, gameState, me, betCallback)
+      return 
     }
 
     if (gameStateInstance.isPreFlop()) {
