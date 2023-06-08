@@ -7,7 +7,7 @@ type Card = {
   suit: Suit 
 }
 
-type PlayerInGame = {
+export type PlayerInGame = {
   id: number,
   name: string,
   status: string,
@@ -16,7 +16,7 @@ type PlayerInGame = {
   hole_cards?: Card[]
 }
 
-type GameState = {
+export type GameState = {
   tournament_id: number,
   game_id: number,
   current_buy_in: number,
@@ -25,7 +25,8 @@ type GameState = {
   small_blind: number,
   players: PlayerInGame[],
   community_cards: any[],
-  in_action: number
+  in_action: number,
+  dealer: number
 }
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
