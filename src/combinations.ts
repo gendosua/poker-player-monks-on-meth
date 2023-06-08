@@ -158,7 +158,7 @@ function isTwoPair(hand: Hand): boolean {
     return Object.values(rankCounts).filter(count => count === 2).length === 2;
 }
 
-function evaluateHand(hand: Hand): HandRank {
+export function evaluateHand(hand: Hand): HandRank {
     if (isRoyalFlush(hand)) return HandRank.RoyalFlush;
     if (isStraightFlush(hand)) return HandRank.StraightFlush;
     if (isFourOfAKind(hand)) return HandRank.FourOfAKind;
