@@ -50,7 +50,7 @@ export class Player {
             betCallback,
             gameStateInstance.isRiver()
                 ? gameState.players[gameState.in_action].stack
-                : 100
+                : Math.floor(gameState.players[gameState.in_action].stack/5)
         )
         return;
       }
@@ -83,7 +83,7 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack/4)
+      this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/4))
       return;
     }
 
