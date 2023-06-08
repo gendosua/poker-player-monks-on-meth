@@ -48,7 +48,10 @@ export class Player {
       }
   
       this.raise(gameState, betCallback)
-    }
+    } 
+
+    this.check(betCallback)
+
   }
 
   private generateRandomInteger(min: number, max: number): number {
