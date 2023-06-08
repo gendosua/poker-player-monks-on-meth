@@ -1,5 +1,5 @@
-import { GameStateHelper } from "./GameHelper";
-import { evaluateHand } from "./combinations";
+import {GameStateHelper} from "./GameHelper";
+import {evaluateHand, HandRank} from "./combinations";
 
 type BetCall = (bet: number) => void;
 export type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
@@ -38,6 +38,15 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
   const handRank = evaluateHand([myPlayer.hole_cards[0], myPlayer.hole_cards[1], ...gameState.community_cards])
 
   console.log(`++++ Monks: hand rank ${handRank}  ++++`)
+
+  if (handRank === HandRank.RoyalFlush) {
+    this.raise(
+        gameState,
+        betCallback,
+        gameState.players[gameState.in_action].stack
+    )
+    return;
+  }
 
   if (handRank > 6) {
     this.raise(
