@@ -40,7 +40,7 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
 
   console.log(`++++ Monks: hand rank ${handRank}  ++++`)
 
-  if (handRank === HandRank.RoyalFlush) {
+  if (handRank === HandRank.RoyalFlush || handRank === HandRank.StraightFlush) {
     this.raise(
         gameState,
         betCallback,
@@ -49,7 +49,7 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
     return;
   }
 
-  if (handRank > 6) {
+  if ([HandRank.FourOfAKind, HandRank.FullHouse, HandRank.Flush].includes(handRank)) {
     this.raise(
         gameState,
         betCallback,
@@ -57,19 +57,19 @@ function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  my
             ? gameState.players[gameState.in_action].stack/5
             : (
                 gameStateInstance.isTurn()
-                ? Math.floor(gameState.players[gameState.in_action].stack/20)
-                : Math.floor(gameState.players[gameState.in_action].stack/25)
+                ? Math.floor(gameState.players[gameState.in_action].stack/10)
+                : Math.floor(gameState.players[gameState.in_action].stack/15)
             )
     )
     return;
   }
 
-  if (handRank > 2) {
-    this.raise(gameState, betCallback)
+  if ([HandRank.Straight, HandRank.ThreeOfAKind, HandRank.TwoPair].includes(handRank)) {
+    this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/20))
     return;
   }
 
-  if (handRank > 0) {
+  if ([HandRank.OnePair].includes(handRank)) {
     this.call(gameState, betCallback)
     return;
   }
