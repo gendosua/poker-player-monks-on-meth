@@ -105,6 +105,7 @@ export class Player {
 
   public raise(gameState: GameState, betCallback: BetCall): void {
     if (!this.canRaise(gameState)) {
+      console.log(`++++ Monks: tried but can't raise ❌ ++++`)
       return this.call(gameState, betCallback)
     }
 
