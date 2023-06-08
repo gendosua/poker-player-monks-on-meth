@@ -129,6 +129,11 @@ export class Player {
         return
       }
 
+      if (initialHandRate === InitialHandRating.Exceptional) {
+        this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
+        return;
+      }
+
       // Great
       this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/20))
       return;
@@ -187,10 +192,19 @@ export class Player {
 };
 
 export enum InitialHandRating {
+  Exceptional,
   Great,
   Good,
   Poor,
   Bad
+}
+
+
+const ExceptionalStartingHands = {
+  'AA': true,
+  'KK': true,
+  'QQ': true,
+  'JJ': true,
 }
 
 const GreatStartingHands = {
@@ -239,6 +253,9 @@ function rateStartingHand(card1: Card, card2: Card): InitialHandRating {
 
   const handCode = pos1 > pos2 ? `${card2.rank}${card1.rank}` : `${card1.rank}${card2.rank}`
 
+  if (ExceptionalStartingHands.hasOwnProperty(handCode)) {
+    return InitialHandRating.Exceptional
+  }
   if (GreatStartingHands.hasOwnProperty(handCode)) {
     return InitialHandRating.Great
   }
