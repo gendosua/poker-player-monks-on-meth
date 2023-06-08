@@ -109,14 +109,13 @@ export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
     const gameStateInstance = new GameStateHelper(gameState); 
     const me = gameStateInstance.getMyPlayer()
-    const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
-      afterFlop.call(this, gameStateInstance, gameState, me, betCallback)
-      return 
-    }
+    // just to log it
+    gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()
 
     if (gameStateInstance.isPreFlop()) {
+      const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
+
       console.log(`++++ Monks: pre-flop hand rank ${initialHandRate}  ++++`)
 
       gameStateInstance.printHand()
@@ -130,11 +129,12 @@ export class Player {
         return
       }
 
+      // Great
       this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/20))
       return;
     }
 
-    this.check(betCallback)
+    afterFlop.call(this, gameStateInstance, gameState, me, betCallback)
   }
 
   public showdown(gameState: GameState): void {
