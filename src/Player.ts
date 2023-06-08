@@ -118,9 +118,11 @@ export class Player {
     const playerBet = gameState.players[gameState.in_action].bet
     const newBet = currentBuy - playerBet + gameState.minimum_raise + raiseAmount
 
-    console.log(`++++ 💰 Monks: raise ${newBet} (min_raise=${gameState.minimum_raise}, cur_buy_in=${gameState.current_buy_in}, curr_bet=${playerBet})  💰 ++++`)
+    const correctBet = Math.min(newBet, gameState.players[gameState.in_action].stack)
 
-    betCallback(newBet);
+    console.log(`++++ 💰 Monks: raise ${correctBet} (min_raise=${gameState.minimum_raise}, cur_buy_in=${gameState.current_buy_in}, curr_bet=${playerBet})  💰 ++++`)
+
+    betCallback(correctBet);
   }
 
 
