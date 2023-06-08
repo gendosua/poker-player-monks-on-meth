@@ -26,7 +26,7 @@ export type GameState = {
   bet_index: number,
   small_blind: number,
   players: PlayerInGame[],
-  community_cards: any[],
+  community_cards: Card[],
   in_action: number,
   dealer: number
 }

@@ -33,4 +33,8 @@ export class GameStateHelper {
     public isRiver(): boolean {
         return this.gameState.round === 3;
     }
+
+    public getCommunityCards() {
+        return this.gameState.community_cards;
+    }
 }
