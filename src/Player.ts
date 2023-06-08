@@ -32,6 +32,41 @@ export type GameState = {
   dealer: number
   pot: number,
 }
+
+function afterFlop(gameStateInstance: GameStateHelper, gameState: GameState,  myPlayer: PlayerInGame, betCallback: BetCall) {
+  gameStateInstance.printHand()
+  const handRank = evaluateHand([myPlayer.hole_cards[0], myPlayer.hole_cards[1], ...gameState.community_cards])
+
+  console.log(`++++ Monks: hand rank ${handRank}  ++++`)
+
+  if (handRank > 6) {
+    this.raise(
+        gameState,
+        betCallback,
+        gameStateInstance.isRiver()
+            ? gameState.players[gameState.in_action].stack/2
+            : (
+                gameStateInstance.isTurn()
+                ? Math.floor(gameState.players[gameState.in_action].stack/10)
+                : Math.floor(gameState.players[gameState.in_action].stack/15)
+            )
+    )
+    return;
+  }
+
+  if (handRank > 2) {
+    this.raise(gameState, betCallback)
+    return;
+  }
+
+  if (handRank > 0) {
+    this.call(gameState, betCallback)
+    return;
+  }
+
+  this.check(betCallback)
+  return;
+}
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
     const gameStateInstance = new GameStateHelper(gameState); 
@@ -39,38 +74,7 @@ export class Player {
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
     if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
-      gameStateInstance.printHand()
-      const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
-
-      console.log(`++++ Monks: hand rank ${handRank}  ++++`)
-
-      if (handRank > 6) {
-        this.raise(
-            gameState,
-            betCallback,
-            gameStateInstance.isRiver()
-                ? gameState.players[gameState.in_action].stack/2
-                : (
-                    gameStateInstance.isTurn()
-                    ? Math.floor(gameState.players[gameState.in_action].stack/10)
-                    : Math.floor(gameState.players[gameState.in_action].stack/15)
-                )
-        )
-        return;
-      }
-
-      if (handRank > 2) {
-        this.raise(gameState, betCallback)
-        return;
-      }
-
-      if (handRank > 0) {
-        this.call(gameState, betCallback)
-        return;
-      }
-
-      this.check(betCallback)
-      return;
+      afterFlop(gameStateInstance, gameState, me, betCallback)
     }
 
     if (gameStateInstance.isPreFlop()) {
