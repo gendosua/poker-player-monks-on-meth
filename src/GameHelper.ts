@@ -41,10 +41,10 @@ export class GameStateHelper {
     }
 
     public isRiver(): boolean {
-        if (this.gameState.community_cards.length === 5) {
+        if (this.gameState.community_cards.length >= 5) {
             console.log(`======== 🌊 River, round ${this.gameState.round} game-id ${this.gameState.game_id} 🌊 =========`)
         }
-        return this.gameState.community_cards.length > 5;
+        return this.gameState.community_cards.length >= 5;
     }
 
     public getCommunityCards() {
