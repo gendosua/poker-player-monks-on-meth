@@ -1,3 +1,4 @@
+import { GameStateHelper } from "./GameHelper";
 
 type BetCall = (bet: number) => void;
 type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
@@ -30,6 +31,20 @@ export type GameState = {
 }
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
+    // In which round I am?
+
+    // Switch statement and take actions in different ones
+    
+    // Flop phase
+    const gameStateInstance = new GameStateHelper(gameState); 
+    const me = gameStateInstance.getMyPlayer()
+    
+    const initialHandRate = rateStartingHand(me.hole_cards[0],me.hole_cards[1])
+    if(initialHandRate === HandRating.Bad) {
+      this.check(betCallback)
+      return 
+    }
+    // Make raise function
     betCallback(this.generateRandomInteger(250, 500));
   }
 
