@@ -36,7 +36,7 @@ export class Player {
     const me = gameStateInstance.getMyPlayer()
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if (gameStateInstance.isPreFloc() || gameStateInstance.isFloc() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+    if (gameStateInstance.isPreFlop() || gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
       if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
         return 

@@ -18,19 +18,31 @@ export class GameStateHelper {
         return this.gameState.players[this.gameState.in_action]
     }
 
-    public isPreFloc(): boolean {
+    public isPreFlop(): boolean {
+        if (this.gameState.round === 0) {
+            console.log(`======== PreFlop, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 0;
     }
 
-    public isFloc(): boolean {
+    public isFlop(): boolean {
+        if (this.gameState.round === 1) {
+            console.log(`======== Flop, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 1;
     }
 
     public isTurn(): boolean {
+        if (this.gameState.round === 2) {
+            console.log(`======== Turn, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 2;
     }
 
     public isRiver(): boolean {
+        if (this.gameState.round === 3) {
+            console.log(`======== River, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 3;
     }
 
