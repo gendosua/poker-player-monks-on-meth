@@ -49,4 +49,14 @@ export class GameStateHelper {
     public getCommunityCards() {
         return this.gameState.community_cards;
     }
+
+    public getMyHand() {
+        const me = this.getMyPlayer()
+        return me.hole_cards;
+    }
+
+    public printHand() {
+        const myCards = this.getMyHand();
+        console.log(` My hand is => ${myCards.map(card => `${card.rank}: ${card.suit}`)}`)
+    }
 }
