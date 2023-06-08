@@ -43,7 +43,7 @@ export class GameStateHelper {
         if (this.gameState.community_cards.length === 5) {
             console.log(`======== 🌊 River, round ${this.gameState.round} 🌊 =========`)
         }
-        return this.gameState.community_cards.length === 5;
+        return this.gameState.community_cards.length > 5;
     }
 
     public getCommunityCards() {
