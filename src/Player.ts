@@ -45,11 +45,17 @@ export class Player {
       console.log(`++++ Monks: hand rank ${handRank}  ++++`)
 
       if (handRank > 6) {
-        this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
+        this.raise(
+            gameState,
+            betCallback,
+            gameStateInstance.isRiver()
+                ? gameState.players[gameState.in_action].stack
+                : Math.floor(gameState.players[gameState.in_action].stack/5)
+        )
         return;
       }
 
-      if (handRank > 1) {
+      if (handRank > 2) {
         this.raise(gameState, betCallback)
         return;
       }
@@ -64,7 +70,6 @@ export class Player {
     }
 
     if (gameStateInstance.isPreFlop()) {
-
       console.log(`++++ Monks: pre-flop hand rank ${initialHandRate}  ++++`)
 
       gameStateInstance.printHand()
@@ -78,7 +83,8 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
+      this.raise(gameState, betCallback, Math.floor(gameState.players[gameState.in_action].stack/4))
+      return;
     }
 
 
