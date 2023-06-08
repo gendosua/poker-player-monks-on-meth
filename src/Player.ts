@@ -49,7 +49,7 @@ export class Player {
         return;
       }
 
-      if (handRank > 3) {
+      if (handRank > 1) {
         this.raise(gameState, betCallback)
         return;
       }
@@ -78,7 +78,7 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback, 100)
+      this.raise(gameState, betCallback, 200)
     }
 
     this.check(betCallback)
