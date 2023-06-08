@@ -39,6 +39,7 @@ export class Player {
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
     if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+      gameStateInstance.printHand()
       const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
 
       if (handRank > 6) {
@@ -61,6 +62,7 @@ export class Player {
     }
 
     if (gameStateInstance.isPreFlop()) {
+      gameStateInstance.printHand()
       if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
         return 
@@ -82,7 +84,8 @@ export class Player {
   }
 
   public showdown(gameState: any): void {
-
+      console.log(` ******** 🥷Showdown 🥷 ********`)
+      console.log(JSON.stringify(gameState, null, 0))
   }
 
   public check(betCallback: BetCall) {
