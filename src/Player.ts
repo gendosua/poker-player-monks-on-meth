@@ -98,7 +98,7 @@ export class Player {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
     const moneyLeft = gameState.players[gameState.in_action].stack
-    const newBet = currentBuy - playerBet + gameState.minimum_raise
+    const newBet = currentBuy - playerBet + gameState.minimum_raise + 10
 
     return moneyLeft >= newBet
   }
