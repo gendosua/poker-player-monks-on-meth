@@ -29,6 +29,7 @@ export type GameState = {
   community_cards: Card[],
   in_action: number,
   dealer: number
+  pot: number,
 }
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
@@ -46,8 +47,12 @@ export class Player {
         this.call(gameState, betCallback)
         return
       }
-  
-      this.raise(gameState, betCallback)
+
+      if (gameState.pot > 400) {
+        this.call(gameState, betCallback)
+      } else {
+        this.raise(gameState, betCallback)
+      }
     } 
 
     this.check(betCallback)
