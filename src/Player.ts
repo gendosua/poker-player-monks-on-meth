@@ -41,9 +41,14 @@ export class Player {
     
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if(initialHandRate === HandRating.Bad) {
+    if (initialHandRate === HandRating.Bad) {
       this.check(betCallback)
       return 
+    }
+
+    if (initialHandRate === HandRating.Good) {
+      this.call(gameState, betCallback)
+      return
     }
 
     this.raise(gameState, betCallback)
