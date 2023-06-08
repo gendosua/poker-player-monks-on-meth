@@ -39,13 +39,14 @@ export class Player {
     const gameStateInstance = new GameStateHelper(gameState); 
     const me = gameStateInstance.getMyPlayer()
     
-    const initialHandRate = rateStartingHand(me.hole_cards[0],me.hole_cards[1])
+    const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
+
     if(initialHandRate === HandRating.Bad) {
       this.check(betCallback)
       return 
     }
-    // Make raise function
-    betCallback(this.generateRandomInteger(250, 500));
+
+    this.raise(gameState, betCallback)
   }
 
   private generateRandomInteger(min: number, max: number): number {
@@ -64,6 +65,12 @@ export class Player {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
     betCallback(currentBuy - playerBet);
+  }
+
+  public raise(gameState: GameState, betCallback: BetCall) {
+    const currentBuy = gameState.current_buy_in;
+    const playerBet = gameState.players[gameState.in_action].bet
+    betCallback(currentBuy - playerBet + gameState.minimum_raise);
   }
 
 
