@@ -27,9 +27,10 @@ export type GameState = {
   bet_index: number,
   small_blind: number,
   players: PlayerInGame[],
-  community_cards: any[],
+  community_cards: Card[],
   in_action: number,
   dealer: number
+  pot: number,
 }
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
@@ -64,12 +65,16 @@ export class Player {
         this.call(gameState, betCallback)
         return
       }
-  
-      this.raise(gameState, betCallback)
-      return;
+
+      if (gameState.pot > 400) {
+        this.call(gameState, betCallback)
+      } else {
+        this.raise(gameState, betCallback)
+      }
     }
 
     this.check(betCallback)
+
   }
 
   private generateRandomInteger(min: number, max: number): number {
@@ -84,16 +89,31 @@ export class Player {
     return betCallback(0)
   }
 
-  public call(gameState: GameState, betCallback: BetCall) {
+  public call(gameState: GameState, betCallback: BetCall): void {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
     betCallback(currentBuy - playerBet);
   }
 
-  public raise(gameState: GameState, betCallback: BetCall) {
+  public canRaise(gameState: GameState): boolean {
     const currentBuy = gameState.current_buy_in;
     const playerBet = gameState.players[gameState.in_action].bet
-    betCallback(currentBuy - playerBet + gameState.minimum_raise);
+    const moneyLeft = gameState.players[gameState.in_action].stack
+    const newBet = currentBuy - playerBet + gameState.minimum_raise
+
+    return moneyLeft >= newBet
+  }
+
+  public raise(gameState: GameState, betCallback: BetCall): void {
+    if (!this.canRaise(gameState)) {
+      return this.call(gameState, betCallback)
+    }
+
+    const currentBuy = gameState.current_buy_in;
+    const playerBet = gameState.players[gameState.in_action].bet
+    const newBet = currentBuy - playerBet + gameState.minimum_raise
+
+    betCallback(newBet);
   }
 
 

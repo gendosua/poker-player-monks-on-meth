@@ -19,18 +19,34 @@ export class GameStateHelper {
     }
 
     public isPreFlop(): boolean {
-        return this.gameState.round === 0;
+        if (this.gameState.round === 0) {
+            console.log(`======== PreFlop, round ${this.gameState.round} =========`)
+        }
+        return this.gameState.round < 1;
     }
 
     public isFlop(): boolean {
+        if (this.gameState.round === 1) {
+            console.log(`======== Flop, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 1;
     }
 
     public isTurn(): boolean {
+        if (this.gameState.round === 2) {
+            console.log(`======== Turn, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 2;
     }
 
     public isRiver(): boolean {
+        if (this.gameState.round === 3) {
+            console.log(`======== River, round ${this.gameState.round} =========`)
+        }
         return this.gameState.round === 3;
+    }
+
+    public getCommunityCards() {
+        return this.gameState.community_cards;
     }
 }
