@@ -18,11 +18,11 @@ export class GameStateHelper {
         return this.gameState.players[this.gameState.in_action]
     }
 
-    public isPreFloc(): boolean {
+    public isPreFlop(): boolean {
         return this.gameState.round === 0;
     }
 
-    public isFloc(): boolean {
+    public isFlop(): boolean {
         return this.gameState.round === 1;
     }
 

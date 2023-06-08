@@ -1,4 +1,5 @@
 import { GameStateHelper } from "./GameHelper";
+import { evaluateHand } from "./combinations";
 
 type BetCall = (bet: number) => void;
 export type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
@@ -36,7 +37,24 @@ export class Player {
     const me = gameStateInstance.getMyPlayer()
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if (gameStateInstance.isPreFloc() || gameStateInstance.isFloc() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+    if (gameStateInstance.isFlop() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
+      const handRank = evaluateHand([me.hole_cards[0], me.hole_cards[1], ...gameState.community_cards])
+
+      if (handRank > 3) {
+        this.raise(gameState, betCallback)
+        return;
+      }
+
+      if (handRank > 0) {
+        this.call(gameState, betCallback)
+        return;
+      }
+
+      this.check(betCallback)
+      return;
+    }
+
+    if (gameStateInstance.isPreFlop()) {
       if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
         return 
@@ -48,7 +66,10 @@ export class Player {
       }
   
       this.raise(gameState, betCallback)
+      return;
     }
+
+    this.check(betCallback)
   }
 
   private generateRandomInteger(min: number, max: number): number {
