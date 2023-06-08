@@ -50,7 +50,11 @@ export class Player {
             betCallback,
             gameStateInstance.isRiver()
                 ? gameState.players[gameState.in_action].stack
-                : Math.floor(gameState.players[gameState.in_action].stack/5)
+                : (
+                    gameStateInstance.isTurn()
+                    ? Math.floor(gameState.players[gameState.in_action].stack/8)
+                    : Math.floor(gameState.players[gameState.in_action].stack/10)
+                )
         )
         return;
       }
