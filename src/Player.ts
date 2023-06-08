@@ -83,7 +83,7 @@ export class Player {
         return
       }
 
-      this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
+      this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack/4)
       return;
     }
 
