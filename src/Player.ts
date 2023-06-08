@@ -26,8 +26,12 @@ type GameState = {
   in_action: number
 }
 export class Player {
-  public betRequest(gameState: any, betCallback: BetCall): void {
-    betCallback(100);
+  public betRequest(gameState: GameState, betCallback: BetCall): void {
+    betCallback(this.generateRandomInteger(250, 500));
+  }
+
+  private generateRandomInteger(min: number, max: number): number {
+    return Math.floor(min + Math.random()*(max - min + 1))
   }
 
   public showdown(gameState: any): void {
