@@ -32,27 +32,23 @@ export type GameState = {
 }
 export class Player {
   public betRequest(gameState: GameState, betCallback: BetCall): void {
-    // In which round I am?
-
-    // Switch statement and take actions in different ones
-    
-    // Flop phase
     const gameStateInstance = new GameStateHelper(gameState); 
     const me = gameStateInstance.getMyPlayer()
-    
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
-    if (initialHandRate === HandRating.Bad) {
-      this.check(betCallback)
-      return 
+    if (gameStateInstance.isPreFloc() || gameStateInstance.isFloc() || gameStateInstance.isTurn || gameStateInstance.isRiver()) {
+      if (initialHandRate === HandRating.Bad) {
+        this.check(betCallback)
+        return 
+      }
+  
+      if (initialHandRate === HandRating.Good) {
+        this.call(gameState, betCallback)
+        return
+      }
+  
+      this.raise(gameState, betCallback)
     }
-
-    if (initialHandRate === HandRating.Good) {
-      this.call(gameState, betCallback)
-      return
-    }
-
-    this.raise(gameState, betCallback)
   }
 
   private generateRandomInteger(min: number, max: number): number {
