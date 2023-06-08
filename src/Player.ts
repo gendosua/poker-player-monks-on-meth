@@ -81,6 +81,7 @@ export class Player {
       this.raise(gameState, betCallback, gameState.players[gameState.in_action].stack)
     }
 
+
     this.check(betCallback)
   }
 
