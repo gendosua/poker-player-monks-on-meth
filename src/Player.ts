@@ -1,9 +1,9 @@
 import { GameStateHelper } from "./GameHelper";
 
 type BetCall = (bet: number) => void;
-type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
-type Suit = "spades" | "hearts" | "clubs" | "diamonds";
-type Card = {
+export type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
+export type Suit = "spades" | "hearts" | "clubs" | "diamonds";
+export type Card = {
   rank: Rank,
   suit: Suit 
 }
@@ -37,12 +37,12 @@ export class Player {
     const initialHandRate = rateStartingHand(me.hole_cards[0], me.hole_cards[1])
 
     if (gameStateInstance.isPreFloc() || gameStateInstance.isFloc() || gameStateInstance.isTurn() || gameStateInstance.isRiver()) {
-      if (initialHandRate === HandRating.Bad) {
+      if (initialHandRate === InitialHandRating.Bad) {
         this.check(betCallback)
         return 
       }
   
-      if (initialHandRate === HandRating.Good) {
+      if (initialHandRate === InitialHandRating.Good) {
         this.call(gameState, betCallback)
         return
       }
@@ -78,7 +78,7 @@ export class Player {
 
 };
 
-enum HandRating {
+export enum InitialHandRating {
   Great,
   Good,
   Poor,
@@ -125,20 +125,20 @@ const GoodStartingHands = {
 
 const cardOrder = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
 
-function rateStartingHand(card1: Card, card2: Card): HandRating {
+function rateStartingHand(card1: Card, card2: Card): InitialHandRating {
   const pos1 = cardOrder.indexOf(card1.rank)
   const pos2 = cardOrder.indexOf(card2.rank)
 
   const handCode = pos1 > pos2 ? `${card2.rank}${card1.rank}` : `${card1.rank}${card2.rank}`
 
   if (GreatStartingHands.hasOwnProperty(handCode)) {
-    return HandRating.Great
+    return InitialHandRating.Great
   }
   if (GoodStartingHands.hasOwnProperty(handCode)) {
-    return HandRating.Good
+    return InitialHandRating.Good
   }
 
-  return HandRating.Bad;
+  return InitialHandRating.Bad;
 }
 
 export default Player;
